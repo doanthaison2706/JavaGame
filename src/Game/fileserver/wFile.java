@@ -12,10 +12,10 @@ import java.util.ArrayList;
 public class wFile {
 
 	/** Đường dẫn file đầu vào chứa dữ liệu puzzle */
-	public static final String FILE_INPUT_PATH = "/Users/doanthaison/Code Everything/N-Puzzle-main/DuLieu.txt";
+	public static final String FILE_INPUT_PATH = "/Users/doanthaison/Code Everything/N-Puzzle-main/res/Txt/DuLieu.txt";
 
 	/** Đường dẫn file đầu ra để lưu kết quả chơi */
-	public static final String FILE_OUTPUT_PATH = "/Users/doanthaison/Code Everything/N-Puzzle-main/KetQua.txt";
+	public static final String FILE_OUTPUT_PATH = "/Users/doanthaison/Code Everything/N-Puzzle-main/res/Txt/KetQua.txt";
 
 	/**
 	 * Đọc nội dung từ file đầu vào và tách các số thành danh sách chuỗi.

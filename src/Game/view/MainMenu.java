@@ -8,98 +8,96 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
+import Game.sound.OptionsMenu;
 import Game.sound.SoundEffect;
 
-/**
- * MainMenu là cửa sổ khởi đầu của game Puzzle.
- * Hiển thị nút "PLAY GAME" và chạy nhạc nền khi người chơi bắt đầu.
- *
- * @author YourName
- */
 public class MainMenu extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
-	/** Nút bắt đầu trò chơi */
 	private JButton startButton = new JButton("PLAY GAME");
-
-	/** Nút thoát (chưa dùng) */
 	private JButton outButton = new JButton("EXIT");
+	private JButton optionsButton = new JButton("OPTIONS");
+	private boolean isMusicPlaying = false;
+	private JButton imageButton; // Thêm nút ảnh đây
 
-	/** Tham chiếu đến đối tượng Puzzle game */
 	private Puzzle pz;
-
-	/** Trình phát hiệu ứng âm thanh */
 	private SoundEffect sound = new SoundEffect();
+	 // Đường dẫn tới file âm thanh click
+	private String click = "/Users/doanthaison/Code Everything/N-Puzzle-main/res/SoundEffect/soundgame.wav";;
 
-	/** Đường dẫn tới file âm thanh click */
-	private String click;
-
-	/**
-	 * Khởi tạo giao diện Menu chính.
-	 * Gồm ảnh nền, nút PLAY GAME và cấu hình cửa sổ.
-	 */
 	public MainMenu() {
 		this.setTitle("Puzzle Game");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLocation(100, 100);
 		this.setSize(530, 700);
-		this.setResizable(true);
+		this.setResizable(false);
 		this.setLocationRelativeTo(null);
+		sound.setFile(click);
+		sound.play();
+		sound.loop();
+		isMusicPlaying = true;
+		// Tạo nút ảnh
+		imageButton = new JButton(new ImageIcon("/Users/doanthaison/Code Everything/N-Puzzle-main/res/Pic/anh2.png"));
+		imageButton.setBounds(50, 50, 430, 430); // vị trí ảnh
+		imageButton.setBorderPainted(false);
+		imageButton.setContentAreaFilled(false);
+		imageButton.setFocusPainted(false);
+		imageButton.setFocusable(false);
+		imageButton.addActionListener(this); // Nếu muốn click vào ảnh làm gì thì add action
 
-		// Cấu hình nút Start
-		startButton.setFont(new Font("Aril", Font.BOLD, 20));
-		startButton.setBackground(new Color(49,169,184));
-		startButton.setForeground(new Color(0, 251, 217, 255));
+		// Nút Start
+		startButton.setFont(new Font("Arial", Font.BOLD, 20));
+		startButton.setBackground(new Color(49, 169, 184));
 		startButton.setFocusPainted(false);
-		startButton.setBorder(null);
 		startButton.setBorderPainted(false);
-		startButton.setBounds(181, 560, 150, 50);
-		// Cấu hình nút Exit
-		outButton = new JButton("EXIT");
+		startButton.setBounds(181, 500, 150, 50);
+		startButton.addActionListener(this);
+
+		// Nút Options
+		optionsButton.setFont(new Font("Arial", Font.BOLD, 20));
+		optionsButton.setBackground(new Color(100, 149, 237));
+		optionsButton.setFocusPainted(false);
+		optionsButton.setBorderPainted(false);
+		optionsButton.setBounds(181, 560, 150, 50);
+		optionsButton.addActionListener(this);
+
+		// Nút Exit
 		outButton.setFont(new Font("Arial", Font.BOLD, 20));
 		outButton.setBackground(new Color(184, 49, 49));
-		outButton.setForeground(new Color(0, 251, 217, 255));
 		outButton.setFocusPainted(false);
 		outButton.setBorderPainted(false);
 		outButton.setBounds(181, 620, 150, 50);
 		outButton.addActionListener(this);
 
-		// Ảnh nền
-		JLabel background = new JLabel(new ImageIcon("/Users/doanthaison/Code Everything/N-Puzzle-main/anh2.png"));
-		background.setSize(530, 700);
-		this.add(background);
-		background.add(startButton);
-		background.add(outButton);
-
+		// Thêm các thành phần vào cửa sổ
+		this.setLayout(null);
+		this.add(imageButton);
+		this.add(startButton);
+		this.add(optionsButton);
+		this.add(outButton);
+		startButton.setOpaque(true);
+		optionsButton.setOpaque(true);
+		outButton.setOpaque(true);
+		// Background màu trơn
+		this.getContentPane().setBackground(new Color(240, 240, 240)); // trắng nhẹ
 		// Icon cửa sổ
-		this.setIconImage(new ImageIcon("/Users/doanthaison/Code Everything/N-Puzzle-main/Pic/logo.png").getImage());
-
-		// Gán sự kiện
-		startButton.addActionListener(this);
-		outButton.addActionListener(this);
-
-		click = "/Users/doanthaison/Code Everything/N-Puzzle-main/soundgame.wav";
+		this.setIconImage(new ImageIcon("/Users/doanthaison/Code Everything/N-Puzzle-main/res/Pic/logo.png").getImage());
 	}
 
-	/**
-	 * Xử lý sự kiện khi nút được nhấn.
-	 * Khi nhấn PLAY, mở cửa sổ game chính và bật nhạc nền.
-	 *
-	 * @param e Sự kiện hành động được kích hoạt
-	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == startButton) {
 			pz = new Puzzle();
+			pz.setVisible(true);
 			this.setVisible(false);
-			sound.setFile(click);
-			sound.play();
-			sound.loop();
+		} else if (e.getSource() == optionsButton) {
+			new OptionsMenu(sound);
 		} else if (e.getSource() == outButton) {
-			System.exit(0); // thoát chương trình
+			System.exit(0);
+		} else if (e.getSource() == imageButton) {
+			// Nếu muốn click vào ảnh làm gì thì thêm code ở đây
+			System.out.println("Ảnh được click!");
 		}
 	}
 }

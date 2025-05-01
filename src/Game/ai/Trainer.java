@@ -19,7 +19,7 @@ public class Trainer {
         PuzzleEnv env = new PuzzleEnv(3);
         RLAgent agent = new RLAgent();
         // Đường dẫn file lưu Q-Table
-        String qTablePath = "/Users/doanthaison/Code Everything/data/qtable.dat";
+        String qTablePath = "/Users/doanthaison/Code Everything/N-Puzzle-main/res/data/qtable.dat";
         // Nếu có Q-Table từ trước thì load, không thì bắt đầu mới
         try {
             agent.loadQTable(qTablePath);

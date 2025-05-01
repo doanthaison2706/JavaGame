@@ -1,7 +1,9 @@
 package Game.ai;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * PuzzleEnv — Mô phỏng môi trường trò chơi n-puzzle.
@@ -99,7 +101,7 @@ public class PuzzleEnv {
     }
 
     /**
-     * Đánh đổi hai nút trên GUI.
+     * Đánh đổi hai nút trên GUI (bao gồm cả số và màu nền).
      * @param matrix Ma trận JButton.
      * @param x1    Tọa độ dòng ô thứ nhất.
      * @param y1    Tọa độ cột ô thứ nhất.
@@ -107,9 +109,14 @@ public class PuzzleEnv {
      * @param y2    Tọa độ cột ô thứ hai.
      */
     private void swap(JButton[][] matrix, int x1, int y1, int x2, int y2) {
-        String temp = matrix[x1][y1].getText();
+        String tempText = matrix[x1][y1].getText();
+        Color tempColor = matrix[x1][y1].getBackground();
+
         matrix[x1][y1].setText(matrix[x2][y2].getText());
-        matrix[x2][y2].setText(temp);
+        matrix[x1][y1].setBackground(matrix[x2][y2].getBackground());
+
+        matrix[x2][y2].setText(tempText);
+        matrix[x2][y2].setBackground(tempColor);
     }
 
     /**

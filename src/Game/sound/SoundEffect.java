@@ -8,8 +8,6 @@ import javax.sound.sampled.*;
  * Hỗ trợ phát, lặp, dừng và đóng file âm thanh.
  *
  * Yêu cầu file định dạng .wav.
- *
- * @author Bạn
  */
 public class SoundEffect {
 
